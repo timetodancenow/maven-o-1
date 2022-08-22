@@ -5,208 +5,72 @@ import org.junit.jupiter.api.Test;
 
 public class RadioTest {
 
+    Radio fm = new Radio(30);
+
     @Test
-    void shouldSetRadioStationInRange() {
-
-        Radio radio = new Radio();
-        radio.setRadioStation((byte) 5);
-
-        byte actual = radio.getRadioStation();
-        byte expected = 5;
-
+    void ShouldSwitchStationToUp() {
+        fm.setNextStation(4);
+        int actual = fm.getCurrentStation();
+        int expected = 5;
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    void shouldSetRadioStationLessZero() {
-
-        Radio radio = new Radio();
-        radio.setRadioStation((byte) -1);
-
-        byte actual = radio.getRadioStation();
-        byte expected = 0;
-
+    void ShouldSwitchOnStartStation() {
+        fm.setNextStation(29);
+        int actual = fm.getCurrentStation();
+        int expected = 0;
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    void shouldSetRadioStationMore9() {
-
-        Radio radio = new Radio();
-        radio.setRadioStation((byte) 10);
-
-        byte actual = radio.getRadioStation();
-        byte expected = 0;
-
+    void ShouldSwitchStationToDown() {
+        fm.setPrevStation(5);
+        int actual = fm.getCurrentStation();
+        int expected = 4;
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    void shouldNextRadioStationInRange() {
+    void ShouldSwitchOnFinalStation() {
+        fm.setPrevStation(0);
+        int actual = fm.getCurrentStation();
+        int expected = 29;
+        Assertions.assertEquals(expected, actual);
+    }
 
-        Radio radio = new Radio();
-        radio.setRadioStation((byte) 5);
+    Radio volume = new Radio();
 
-        radio.nextRadioStation();
-
-        byte actual = radio.getRadioStation();
-        byte expected = 6;
-
+    @Test
+    void ShouldIncreaseVolumeUp() {
+        volume.setPlusVolume(6);
+        int actual = volume.getCurrentVolume();
+        int expected = 7;
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    void shouldNextRadioStationEquals9() {
-
-        Radio radio = new Radio();
-        radio.setRadioStation((byte) 9);
-
-        radio.nextRadioStation();
-
-        byte actual = radio.getRadioStation();
-        byte expected = 0;
-
+    void ShouldIncreaseVolumeDown() {
+        volume.setMinusVolume(5);
+        int actual = volume.getCurrentVolume();
+        int expected = 4;
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    void shouldNextRadioStationOver9() {
-
-        Radio radio = new Radio();
-        radio.setRadioStation((byte) 13);
-
-        radio.nextRadioStation();
-
-        byte actual = radio.getRadioStation();
-        byte expected = 1;
-
+    void ShouldIncreaseVolumeToMax() {
+        volume.setPlusVolume(100);
+        int actual = volume.getCurrentVolume();
+        int expected = 100;
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    void shouldNextRadioStationLessZero() {
-
-        Radio radio = new Radio();
-        radio.setRadioStation((byte) -5);
-
-        radio.nextRadioStation();
-
-        byte actual = radio.getRadioStation();
-        byte expected = 1;
-
+    void ShouldDecreaseVolumeToMin() {
+        volume.setMinusVolume(0);
+        int actual = volume.getCurrentVolume();
+        int expected = 0;
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    void shouldPrevRadioStationInRange() {
-
-        Radio radio = new Radio();
-        radio.setRadioStation((byte) 5);
-
-        radio.prevRadioStation();
-
-        byte actual = radio.getRadioStation();
-        byte expected = 4;
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldPrevRadioStationEqualsZero() {
-
-        Radio radio = new Radio();
-        radio.setRadioStation((byte) 0);
-
-        radio.prevRadioStation();
-
-        byte actual = radio.getRadioStation();
-        byte expected = 9;
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldPrevRadioStationOver9() {
-
-        Radio radio = new Radio();
-        radio.setRadioStation((byte) 13);
-
-        radio.prevRadioStation();
-
-        byte actual = radio.getRadioStation();
-        byte expected = 9;
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldPrevRadioStationLessZero() {
-
-        Radio radio = new Radio();
-        radio.setRadioStation((byte) -5);
-
-        radio.prevRadioStation();
-
-        byte actual = radio.getRadioStation();
-        byte expected = 9;
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldSetVolumeUp() {
-
-        Radio radio = new Radio();
-
-        radio.increaseVolume();
-
-        byte actual = radio.getVolume();
-        byte expected = 1;
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldIncreaseVolumeDownOver10() {
-
-        Radio radio = new Radio();
-
-        for (int i = 0; i < 15; i++) {
-            radio.increaseVolume();
-        }
-
-        byte actual = radio.getVolume();
-        byte expected = 10;
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldDecreaseVolumeEqualsZero() {
-
-        Radio radio = new Radio();
-
-        radio.decreaseVolume();
-
-        byte actual = radio.getVolume();
-        byte expected = 0;
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldDecreaseVolumeInRange() {
-
-        Radio radio = new Radio();
-        for (int i = 0; i < 5; i++) {
-            radio.increaseVolume();
-        }
-
-        radio.decreaseVolume();
-
-        byte actual = radio.getVolume();
-        byte expected = 4;
-
-        Assertions.assertEquals(expected, actual);
-    }
 }
