@@ -2,71 +2,50 @@ package ru.netology.domain;
 
 public class Radio {
 
-    private byte currentRadioStation;
-    private byte currentVolume;
+    public int currentStation;
 
-    public void setRadioStation(byte newRadioStation) {
-
-        if (newRadioStation < 0) {
-            return;
-        }
-
-        if (newRadioStation > 9) {
-            return;
-        }
-
-        currentRadioStation = newRadioStation;
-    }
-
-    public byte getRadioStation() {
-        return currentRadioStation;
-    }
-
-    public void nextRadioStation() {
-
-        if (currentRadioStation < 9) {
-            currentRadioStation++;
+    public void next(int currentStation) {
+        if (currentStation < 9) {
+            currentStation++;
         } else {
-            currentRadioStation = 0;
+            currentStation = 0;
         }
+        this.currentStation = currentStation;
     }
 
-    public void prevRadioStation() {
-
-        if (currentRadioStation > 0) {
-            currentRadioStation -= 1;
+    public void prev(int currentStation) {
+        if (currentStation > 0) {
+            currentStation = currentStation - 1;
         } else {
-            currentRadioStation = 9;
+            currentStation = 9;
         }
+        this.currentStation = currentStation;
     }
 
-    /*
-    private void setVolume(byte newVolume) {
-        if (newVolume < 0) {
-            return;
-        }
-        if (newVolume > 10) {
-            return;
-        }
-        volume = newVolume;
-    }
-    */
+    public int getCurrentStation() {
 
-    public byte getVolume() {
-        return currentVolume;
+        return this.currentStation;
+
     }
 
-    public void increaseVolume() {
+    public int currentVolume;
 
+    public void setPlusVolume(int currentVolume) {
         if (currentVolume < 10) {
             currentVolume++;
         }
+        this.currentVolume = currentVolume;
     }
 
-    public void decreaseVolume() {
-
-        if (currentVolume > 0){
-            currentVolume -= 1;
+    public void setMinusVolume(int currentVolume) {
+        if (currentVolume > 0) {
+            currentVolume = currentVolume - 1;
         }
+        this.currentVolume = currentVolume;
     }
+
+    public int getCurrentVolume() {
+        return this.currentVolume;
+    }
+
 }
